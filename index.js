@@ -4,7 +4,21 @@ const port = 3000;
 
 app.get("/", (req, res) => {
   console.log("Received a get request");
-  res.send("A responce to a get request on /");
+  res.send("Howdy, I am a server ;)");
+});
+
+app.get("/profiles/:id", (req, res) => {
+  const profileId = req.params.id;
+  console.log(`Received a get request for profile ID: ${profileId}`);
+  res.send(`Howdy! You asked bout a person w profile id: ${profileId}`);
+});
+
+app.post("/profiles/:id", (req, res) => {
+  const profileId = req.params.id;
+  console.log(`Received a post request for profile ID: ${profileId}`);
+  res.send(
+    `Howdy, I jus received your POST request on a profile w id: ${profileId} ;)`
+  );
 });
 
 app.listen(port, () => {
