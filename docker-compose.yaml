@@ -1,0 +1,13 @@
+services:
+  nodejs-server-profiles:
+    image: nodejs-server-profiles
+    build:
+      context: nodejs-server-profiles
+      dockerfile: Dockerfile
+  nodejs-server-about:
+    image: nodejs-server-about
+    build:
+      context: nodejs-server-about
+      dockerfile: Dockerfile
+  # nginx:
+  #todo
