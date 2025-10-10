@@ -4,10 +4,34 @@ services:
     build:
       context: nodejs-server-profiles
       dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    networks:
+      - mynetwork
+
   nodejs-server-about:
     image: nodejs-server-about
     build:
       context: nodejs-server-about
       dockerfile: Dockerfile
-  # nginx:
-  #todo
+    ports:
+      - "3002:3002"
+    networks:
+      - mynetwork
+
+  nginx:
+    image: nginx:latest
+    # depends_on:
+    #   - nodejs-server-profiles
+    #   - nodejs-server-about
+    container_name: server_nginx
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    external: true
