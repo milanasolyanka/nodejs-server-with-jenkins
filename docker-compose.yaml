@@ -1,19 +1,15 @@
 services:
-  nodejs-server-profiles:
-    image: nodejs-server-profiles
+  profiles:
     build:
-      context: nodejs-server-profiles
-      dockerfile: Dockerfile
+      context: ./profiles
     ports:
       - "3001:3001"
     networks:
       - mynetwork
 
-  nodejs-server-about:
-    image: nodejs-server-about
+  about:
     build:
-      context: nodejs-server-about
-      dockerfile: Dockerfile
+      context: ./about
     ports:
       - "3002:3002"
     networks:
@@ -21,9 +17,9 @@ services:
 
   nginx:
     image: nginx:latest
-    # depends_on:
-    #   - nodejs-server-profiles
-    #   - nodejs-server-about
+    depends_on:
+      - profiles
+      - about
     container_name: server_nginx
     ports:
       - "80:80"
