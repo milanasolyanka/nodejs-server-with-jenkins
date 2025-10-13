@@ -7,13 +7,13 @@ app.get("/", (req, res) => {
   res.send("Howdy, I am a server ;)");
 });
 
-app.get("/profiles/:id", (req, res) => {
+app.get("/:id", (req, res) => {
   const profileId = req.params.id;
   console.log(`Received a get request for profile ID: ${profileId}`);
   res.send(`Howdy! You asked bout a person w profile id: ${profileId}`);
 });
 
-app.post("/profiles/:id", (req, res) => {
+app.post("/:id", (req, res) => {
   const profileId = req.params.id;
   console.log(`Received a post request for profile ID: ${profileId}`);
   res.send(
