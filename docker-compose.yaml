@@ -1,7 +1,24 @@
 services:
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    networks:
+      - mynetwork
+
   profiles:
     build:
       context: ./profiles
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     ports:
       - "3001:3001"
     networks:
@@ -10,6 +27,9 @@ services:
   about:
     build:
       context: ./about
+    depends_on:
+      rabbitmq:
+        condition: service_healthy
     ports:
       - "3002:3002"
     networks:
