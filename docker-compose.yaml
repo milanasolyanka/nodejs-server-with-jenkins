@@ -8,7 +8,7 @@ services:
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 5s
-      timeout: 5s
+      timeout: 10s
       retries: 5
     networks:
       - mynetwork
@@ -19,6 +19,7 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+    restart: always
     ports:
       - "3001:3001"
     networks:
@@ -30,6 +31,7 @@ services:
     depends_on:
       rabbitmq:
         condition: service_healthy
+    restart: always
     ports:
       - "3002:3002"
     networks:
@@ -41,6 +43,7 @@ services:
       - profiles
       - about
     container_name: server_nginx
+    restart: always
     ports:
       - "80:80"
     volumes:
@@ -50,4 +53,4 @@ services:
 
 networks:
   mynetwork:
-    external: true
+    driver: bridge
