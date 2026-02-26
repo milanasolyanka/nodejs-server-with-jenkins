@@ -1,7 +1,13 @@
 pipeline {
     agent any
-
     stages {
+        stage('Checkout') {
+            steps {
+                checkout([$class: 'GitSCM', 
+                  branches: [[name: '*/master']], 
+                  userRemoteConfigs: [[url: 'https://github.com/milanasolyanka/nodejs-server-with-jenkins.git']]])
+            }
+        }
 
         stage('Build services') {
             steps {
@@ -19,12 +25,6 @@ pipeline {
             steps {
                 sh 'docker ps'
             }
-        }
-    }
-
-    post {
-        always {
-            echo 'Pipeline finished'
         }
     }
 }
